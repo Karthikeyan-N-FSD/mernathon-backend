@@ -13,11 +13,13 @@ const getAllProducts = async (req, res) => {
     }
 
     if (category) {
-      query.category = category;
+      const categories = category.split(",").map((c) => c.trim());
+      query.category = { $in: categories };
     }
 
     if (subCategory) {
-      query.subCategory = subCategory;
+      const subCategories = subCategory.split(",").map((c) => c.trim());
+      query.subCategory = { $in: subCategories };
     }
 
     let sortOption = {};
