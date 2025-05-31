@@ -9,6 +9,7 @@ const productRoutes = require("./routes/product");
 const reviewRoutes = require("./routes/review");
 const wishlistRoutes = require("./routes/wishlist");
 const orderRoutes = require("./routes/order");
+const subscriptionRoutes = require("./routes/subscription");
 
 connectToDB();
 
@@ -28,6 +29,7 @@ app.use("/api/product", productRoutes);
 app.use("/api/review", reviewRoutes);
 app.use("/api/wishlist", wishlistRoutes);
 app.use("/api/order", orderRoutes);
+app.use("/api/subscribe", subscriptionRoutes);
 
 const PORT = 8000;
 app.listen(PORT, () => {

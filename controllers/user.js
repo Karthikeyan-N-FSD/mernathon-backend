@@ -10,10 +10,11 @@ const signup = async (req, res) => {
     if (user) {
       return res.status(400).json({ message: "User Already Exists" });
     }
+    const hashedPassword = await bcrypt.hash(req.body.password, 10);
     const userData = new User({
       name: req.body.name,
       email: req.body.email,
-      password: req.body.password,
+      password: hashedPassword,
     });
 
     await userData.save();
@@ -58,6 +59,7 @@ const login = async (req, res) => {
         "Your login credentials are incorrect, kindly check and re-enter!",
     });
   } catch (e) {
+    console.error("LOGIN ERROR:", e);
     res.status(500).send({ message: "Some Internal Error" });
   }
 };
