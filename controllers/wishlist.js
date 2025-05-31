@@ -26,7 +26,12 @@ const addToWishlist = async (req, res) => {
         items: [{ productId }],
       });
     } else {
-      wishlist.items.push({ productId });
+      const alreadyExists = wishlist.items.some(
+        (item) => item.productId.toString() === productId
+      );
+      if (!alreadyExists) {
+        wishlist.items.push({ productId });
+      }
     }
 
     await wishlist.save();
