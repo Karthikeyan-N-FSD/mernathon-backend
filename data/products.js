@@ -1,4 +1,4 @@
-export const products = [
+const products = [
   {
     name: "Women Round Neck Cotton Top",
     description:
@@ -624,3 +624,5 @@ export const products = [
     bestseller: false,
   },
 ];
+
+module.exports = { products };
