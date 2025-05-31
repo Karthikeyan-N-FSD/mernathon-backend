@@ -14,7 +14,7 @@ const subscriptionRoutes = require("./routes/subscription");
 connectToDB();
 
 const cors = require("cors");
-app.use(cors());
+app.use(cors({ origin: "*" }));
 
 app.use(express.json());
 app.use("/images", express.static("images"));
