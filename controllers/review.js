@@ -38,3 +38,21 @@ exports.getUserReviews = async (req, res) => {
     res.status(500).json({ message: "Server error", error: error.message });
   }
 };
+
+exports.createReview = async (req, res) => {
+  try {
+    const { productId, rating, comment } = req.body;
+    const userId = req.user._id;
+    if (!productId || !rating) {
+      return res.status(400).json({ message: "Product and rating required" });
+    }
+    const review = await Review.findOneAndUpdate(
+      { userId, productId },
+      { rating, comment },
+      { upsert: true, new: true, setDefaultsOnInsert: true }
+    );
+    res.status(201).json({ message: "Review submitted", review });
+  } catch (error) {
+    res.status(500).json({ message: "Server error", error: error.message });
+  }
+};

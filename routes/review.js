@@ -5,5 +5,6 @@ const { auth } = require("../middleware/auth");
 
 router.get("/:productId", reviewController.getProductReviews);
 router.get("/user", auth, reviewController.getUserReviews);
+router.post("/", auth, reviewController.createReview);
 
 module.exports = router;
