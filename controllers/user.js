@@ -142,11 +142,16 @@ const updateProfile = async (req, res) => {
       return res.status(400).send({ message: "Invalid update fields" });
     }
 
+    // Actually update the fields
+    for (const key of Object.keys(updates)) {
+      user[key] = updates[key];
+    }
+    await user.save();
+
     res.send({
       message: "Profile updated successfully",
       user: {
-        firstName: user.firstName,
-        lastName: user.lastName,
+        name: user.name,
         email: user.email,
         mobile: user.mobile,
         shippingAddress: user.shippingAddress,
