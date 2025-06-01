@@ -54,7 +54,7 @@ const createOrder = async (req, res) => {
 
 const getOrders = async (req, res) => {
   try {
-    const orders = await Order.find()
+    const orders = await Order.find({ userId: req.user._id }) // Only this user's orders
       .sort({ createdAt: -1 })
       .populate("items.productId", "name price image");
     res.json(orders);
