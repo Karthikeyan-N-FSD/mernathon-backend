@@ -2,7 +2,7 @@ const nodemailer = require("nodemailer");
 const Subscription = require("../model/subscription");
 
 const generateDiscountCode = () => {
-  return Math.floor(100000 + Math.random() * 900000).toString(); // 6 digit code
+  return Math.floor(100000 + Math.random() * 900000).toString();
 };
 
 const sendDiscountEmail = async (email, code) => {
@@ -44,5 +44,21 @@ exports.subscribe = async (req, res) => {
     res.json({ message: "Discount code sent to your email!" });
   } catch (error) {
     res.status(500).json({ message: "Failed to send email", error: error.message });
+  }
+};
+
+exports.validateCoupon = async (req, res) => {
+  const { code } = req.body;
+  if (!code) return res.status(400).json({ valid: false, message: "Code required" });
+
+  try {
+    const found = await Subscription.findOne({ code });
+    if (found) {
+      return res.json({ valid: true, discount: 0.2, message: "Coupon valid! 20% off." });
+    } else {
+      return res.json({ valid: false, message: "Invalid coupon code." });
+    }
+  } catch (error) {
+    res.status(500).json({ valid: false, message: "Server error" });
   }
 };
